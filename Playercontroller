@@ -1,0 +1,51 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Playercontroller : MonoBehaviour
+{
+    [SerializeField]
+    int[] rows = new int[] { -1, 0, 1 };
+
+    private int targetRow = 1;
+    private CharacterController charController;
+
+    [SerializeField]
+    float moveSpeed = 5f;
+
+    
+    private void Awake()
+    {
+        charController = GetComponent<CharacterController>();
+        transform.position = new Vector3(rows[targetRow], transform.position.y, 0);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && targetRow > 0)
+        {
+            targetRow--;
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow) && targetRow < rows.Length - 1)
+        {
+            targetRow++;
+        }
+
+        if (Mathf.Abs(transform.position.x - rows[targetRow]) > 0.05f)
+        {
+            if(transform.position.x < rows[targetRow])
+            {
+                charController.Move(Vector3.right * Time.deltaTime * moveSpeed);
+            }
+            else if (transform.position.x > rows[targetRow])
+            {
+                charController.Move(Vector3.left * Time.deltaTime * moveSpeed);
+            }
+        }
+
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, new Vector3(rows[targetRow], transform.position.y, 0), Time.deltaTime);
+        }
+    }
+}
