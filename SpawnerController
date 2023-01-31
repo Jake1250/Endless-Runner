@@ -1,0 +1,27 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SpawnerController : MonoBehaviour
+{
+    [SerializeField]
+    GameObject[] obsticles;
+
+    float spawnDelay;
+    float timeSinceLastSpawn;
+    void Start()
+    {
+        spawnDelay = Random.Range(1f, 10f);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        timeSinceLastSpawn += Time.deltaTime;
+        if (timeSinceLastSpawn > spawnDelay)
+        {
+            timeSinceLastSpawn = 0f;
+            Instantiate(obsticles[Random.Range(0, obsticles.Length)], transform.position, Quaternion.identity);
+        }
+    }
+}
