@@ -8,7 +8,7 @@ public class ObsticalController : MonoBehaviour
     new Rigidbody rigidbody;
 
     float speed = 5f;
-    
+    //gets the player
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
